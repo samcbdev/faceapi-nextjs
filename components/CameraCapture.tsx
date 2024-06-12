@@ -2,6 +2,12 @@
 import { useRef, useState, useEffect } from 'react';
 import * as faceapi from 'face-api.js'
 
+declare global {
+    interface Window {
+        stream: MediaStream;
+    }
+}
+
 export default function CameraCapture() {
     const videoRef = useRef();
     const canvasRef = useRef();
@@ -93,7 +99,7 @@ export default function CameraCapture() {
 
             if (detection) {
                 const resizedRes = faceapi.resizeResults(detection, displaySize)
-                if(!canvasRef.current) {
+                if (!canvasRef.current) {
                     return null;
                 }
                 canvasRef.current.getContext('2d').clearRect(0, 0, videoWidth, videoHeight)
@@ -216,7 +222,7 @@ export default function CameraCapture() {
                         </button>
 
                         {message && (
-                            <div className="mt-4 space-x-2" style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)'}}>
+                            <div className="mt-4 space-x-2" style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>
                                 <p className="text-gray-100 bg-black p-2 rounded-md text-sm">{message}</p>
                             </div>
                         )}
