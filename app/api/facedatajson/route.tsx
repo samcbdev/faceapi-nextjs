@@ -1,7 +1,12 @@
 import fs from "fs";
 import path from "path";
 
-export async function POST(req) {
+interface Item {
+    name: string;
+  }
+  
+
+export async function POST(req: any) {
     const { name, faceData } = await req.json();
     const data = { name, faceData };
     
@@ -12,7 +17,7 @@ export async function POST(req) {
         
         const jsonData = fileContent ? JSON.parse(fileContent) : [];
 
-        const nameExists = jsonData.some(item => item.name.trim().toLowerCase() === name.trim().toLowerCase());
+        const nameExists = jsonData.some((item: Item) => item.name.trim().toLowerCase() === name.trim().toLowerCase());
 
         console.log("nameExists", nameExists);
 
@@ -24,16 +29,16 @@ export async function POST(req) {
         }
 
         if(jsonData.length === 0) {
-            console.log(data);
+            console.log("data", data);
             jsonData.push(data);
         } else {
-            console.log("orhere");
+            console.log("orhere", data);
             jsonData.push(data);
         }
 
         const jsonString = JSON.stringify(jsonData, null, 2);
         fs.writeFileSync(filePath, jsonString, 'utf-8');
-        console.log('Data saved to data.json');
+        console.log('Data saved to facedata.json');
 
         return Response.json({
             status: 200,

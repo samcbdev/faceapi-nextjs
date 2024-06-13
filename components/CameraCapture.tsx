@@ -76,6 +76,7 @@ export default function CameraCapture() {
         const loadKnownFaces = async () => {
             const response = await fetch('/api/getfacedata');
             const res = await response.json();
+            
             const knownFaces: FaceData[] = res.data ?? [];
 
             return knownFaces.map(face => ({
